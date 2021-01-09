@@ -1,10 +1,6 @@
-require('dotenv').config()
-
 const path = require("path")
 const http = require("http") 
 const express = require("express")
-const createError = require("http-errors")
-const morgan = require("morgan")
 const socketio = require("socket.io")
 const Filter = require("bad-words")
 const {generateMessage, generateLocationMessage} = require("./utils/messages")
@@ -20,28 +16,8 @@ const publicDir = path.join(__dirname, "../public")
 
 app.use(express.static(publicDir))
 
-app.use(morgan("dev"))
-
-app.get("", (req, res, next) => {
+app.get("", (req, res) => {
  
-})
-
-// Error Handling
-app.use((req, res, next) => {
- next(createError.NotFound())
-})
-
-app.use((err, req, res, next) => {
- res.status(err.status || 500)
-
- if(err.status === 404) return res.render("404", {
-  name: "Arigbede Omobolaji Paul"
- })
-
- console.table({
-  code: err.status,
-  message: err.message
- })
 })
 
 io.on("connection", (socket) => {
